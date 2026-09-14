@@ -27,21 +27,41 @@ while (is_running):
     match choice_user:
         case '1':
             show_collection(collection)
+            waite = input("Нажмите 'ENTER' чтобы продолжить")
         case '2':
             add_task = input("Введите имя задачи для добавления")
-            collection.append(add_task)
-            print(collection)
+            if add_task.startswith('  '):
+                if len(add_task) < 2:
+                    print("Название не может быть пустым!")
+                    continue
+            else:
+                collection.append(add_task)
+                print(collection)
         case '3':
             show_collection(collection)
-            select_task = int(input("Введите номер задачи: "))
-            edit_task = input("Введите новое имя задачи для редактирование ")
-            collection[select_task - 1] = edit_task
-            print(collection)
+            select_task = input("Введите номер задачи: ")
+            if int(select_task.isdigit()):
+                if int(select_task) > 0 and int(select_task) <= len(collection):
+                    edit_task = input("Введите новое имя задачи для редактирование ")
+                    collection[int(select_task) - 1] = edit_task
+                    print(collection)
+                    print(f"задача '{int(select_task)}' '{int(edit_task)}' умпешно отредактирована!")
+                else:
+                    print("Задачи с таким номером нет")
+            else:
+                print("Задачи с таким номером нет")
         case '4':
             show_collection(collection)
-            delete_task = int(input("Введите номер задачи для удаления"))
-            collection.pop(delete_task - 1)
-            print(collection)
+            delete_task = input("Введите номер задачи для удаления")
+            if int(delete_task.isdigit()):
+                if int(delete_task) <= len(collection) and int(delete_task) > 0:
+                    collection.pop(int(delete_task) - 1)
+                    print(f"задача '{int(delete_task)}' успешно удалена !")
+                    print(collection)
+                else:
+                    print("Задачи с таким номером нет")
+            else:
+                print("Задачи с таким номером нет")
 
         case '5':
             is_running = False
