@@ -1,14 +1,22 @@
 """Основной файл приложения Task Manager
-    version 0.0.3
-    -[x] сделать функцию - редактирование заметок
-    -[x] сделать функции - удаления заметок
+    version 0.0.4
+    приложение может:
+    сохранять задачу, редактировать
+    и может удалять задачу.
 """
 
-collection = ['task 1', 'task 2'] #Лист
-is_start = True #flag
 
-while (is_start):
-    print("Меню"
+collection = [] #Лист
+is_running = True #flag
+
+def show_collection(task_collection):
+    print("-" * 30)
+    for i, j in enumerate(task_collection):
+        print(i + 1, j)
+    print("-" * 30)
+    
+while (is_running):
+    print("Меню\n"
         "1 - показать задачи\n"
         "2 - добавить заметку\n"
         "3 - Редактировать задачу\n"
@@ -18,24 +26,28 @@ while (is_start):
 
     match choice_user:
         case '1':
-            print(collection)
+            show_collection(collection)
         case '2':
-            collection.append('task')
+            add_task = input("Введите имя задачи для добавления")
+            collection.append(add_task)
             print(collection)
         case '3':
-            select_edit = int(input("Введите номер задачи: "))
-            edit_name = input("Введите новое имя задачи: ")
-            collection[select_edit - 1] = edit_name
+            show_collection(collection)
+            select_task = int(input("Введите номер задачи: "))
+            edit_task = input("Введите новое имя задачи для редактирование ")
+            collection[select_task - 1] = edit_task
             print(collection)
-
         case '4':
-            delete_edit = int(input("Введите номер задачи: "))
-            collection.pop(delete_edit - 1)
+            show_collection(collection)
+            delete_task = int(input("Введите номер задачи для удаления"))
+            collection.pop(delete_task - 1)
             print(collection)
 
         case '5':
-            is_start = False
+            is_running = False
             print("Пока-пока")
 
         case _:
             print('Такого пункста нет')
+
+
