@@ -14,7 +14,39 @@ def show_collection(task_collection):
     for i, j in enumerate(task_collection):
         print(i + 1, j)
     print("-" * 30)
-    
+
+def check_confirm(select_task, task_list):
+    if int(select_task.isdigit()):
+        if (select_task > 0 and select_task <= len(task_list)):
+            return 1
+        else:
+            return 2
+    else:
+        return 3
+
+
+def edit_task(task_collection):
+    select_edit = input("Введите номер задачи: ")
+    if check_confirm(delete_task, task_collection):
+        edit_name = input("Новое имя задачи")
+        task_collection[int(select_edit)] = select_edit
+        print(f"Задача с номером {delete_task} успешно удалена")
+    elif check_confirm(delete_task, task_collection) == 2:
+        print(f"Задачи с номером {delete_task} нет в списке")
+    elif check_confirm(delete_task, task_collection) == 3:
+        print(f"Введите именно номер задачи!")
+        
+def delete_task(task_collection):
+    delete_task = input("Введите номер задачи для удаления")
+    if check_confirm(delete_task, task_collection):
+        task_collection.pop(int(delete_task) - 1)
+        print(f"Задача с номером {delete_task} успешно удалена")
+    elif check_confirm(delete_task, task_collection) == 2:
+        print(f"Задачи с номером {delete_task} нет в списке")
+    elif check_confirm(delete_task, task_collection) == 3:
+        print(f"Введите именно номер задачи!")
+
+
 while (is_running):
     print("Меню\n"
         "1 - показать задачи\n"
@@ -23,6 +55,7 @@ while (is_running):
         "4 - Удалить задачу\n"
         "5 - выйти\n")
     choice_user = input('ВВедите ваш выбор (1,2,3,4 или 5)')
+
 
     match choice_user:
         case '1':
@@ -39,29 +72,11 @@ while (is_running):
                 print(collection)
         case '3':
             show_collection(collection)
-            select_task = input("Введите номер задачи: ")
-            if int(select_task.isdigit()):
-                if int(select_task) > 0 and int(select_task) <= len(collection):
-                    edit_task = input("Введите новое имя задачи для редактирование ")
-                    collection[int(select_task) - 1] = edit_task
-                    print(collection)
-                    print(f"задача '{int(select_task)}' '{int(edit_task)}' умпешно отредактирована!")
-                else:
-                    print("Задачи с таким номером нет")
-            else:
-                print("Задачи с таким номером нет")
+            edit_task(collection)
+
         case '4':
             show_collection(collection)
-            delete_task = input("Введите номер задачи для удаления")
-            if int(delete_task.isdigit()):
-                if int(delete_task) <= len(collection) and int(delete_task) > 0:
-                    collection.pop(int(delete_task) - 1)
-                    print(f"задача '{int(delete_task)}' успешно удалена !")
-                    print(collection)
-                else:
-                    print("Задачи с таким номером нет")
-            else:
-                print("Задачи с таким номером нет")
+            delete_task(collection)
 
         case '5':
             is_running = False
@@ -69,5 +84,3 @@ while (is_running):
 
         case _:
             print('Такого пункста нет')
-
-
