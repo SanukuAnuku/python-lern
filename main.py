@@ -1,5 +1,5 @@
 """Основной файл приложения Task Manager
-    version 0.0.4
+    version 0.0.5
     приложение может:
     сохранять задачу, редактировать
     и может удалять задачу.
@@ -18,33 +18,27 @@ def show_collection(task_collection):
 def check_confirm(select_task, task_list):
     if int(select_task.isdigit()):
         if (select_task > 0 and select_task <= len(task_list)):
-            return 1
+            return True
         else:
-            return 2
+            print(f"Задача с номером {select_task} нет в списке")
+            return False
     else:
-        return 3
+        print(f"Введите миенно номер задачи!")
+        return False
 
 
 def edit_task(task_collection):
     select_edit = input("Введите номер задачи: ")
     if check_confirm(delete_task, task_collection):
         edit_name = input("Новое имя задачи")
-        task_collection[int(select_edit)] = select_edit
-        print(f"Задача с номером {delete_task} успешно удалена")
-    elif check_confirm(delete_task, task_collection) == 2:
-        print(f"Задачи с номером {delete_task} нет в списке")
-    elif check_confirm(delete_task, task_collection) == 3:
-        print(f"Введите именно номер задачи!")
-        
+        task_collection[int(select_edit) - 1] = edit_name
+        print(f"Задача {edit_name} успешно изменина!")
+
 def delete_task(task_collection):
     delete_task = input("Введите номер задачи для удаления")
     if check_confirm(delete_task, task_collection):
         task_collection.pop(int(delete_task) - 1)
-        print(f"Задача с номером {delete_task} успешно удалена")
-    elif check_confirm(delete_task, task_collection) == 2:
-        print(f"Задачи с номером {delete_task} нет в списке")
-    elif check_confirm(delete_task, task_collection) == 3:
-        print(f"Введите именно номер задачи!")
+        print(f"Задача под номером {delete_task} успешно удалена")
 
 
 while (is_running):
