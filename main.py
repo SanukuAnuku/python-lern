@@ -8,13 +8,19 @@
     и может удалять задачу.
 """
 
-collection = [] #Лист
 is_running = True #flag
+name_file = 'saves.txt'
 
 def show_collection(task_collection):
     print("-" * 30)
-    for i, j in enumerate(task_collection):
-        print(i + 1, j)
+    for number, content in enumerate(task_collection):
+        word = ''
+        for symbol in content:
+            if symbol == '|':
+                word = f"{word}{symbol}"
+            else:
+                break
+        print(number + 1, str(word))
     print("-" * 30)
 
 def check_confirm(select_task, task_list):
@@ -42,19 +48,32 @@ def delete_task(task_collection):
         print(f"Задача под номером {delete_task} успешно удалена")
 
 def add_task(task_collection):
-    add_task = input("Введите имя задачи для добавления")
-    if add_task.startswith('  '):
-        if len(add_task) < 2:
-            print("Название не может быть пустым!")
-        else:
-            print("")
+    task_name = input("Введите имя задачи для добавления")
+    task_content = input("Введите содержание задачи")
+    if task_name.startswith('') or task_content.startswith(''):
+        if len(task_content) < 2 and len(task_content) < 2:
+            print(f"Имя задачи и содержание не должнео быть пустым !")
+            return
     else:
-        collection.append(add_task)
-        print(collection)
+        full_name = f"{task_name} | {task_content}"
+        task_collection.append(full_name)
 
+def load_file(task_list, file_name):
+    name_file = "saves.txt"
+    with open(name_file, "r", encoding="utf-8") as file:
+        for line in file:
+            task_list.append(line)
 
+"""сохранение списка задач в файл"""
+def save_file(task_list, file_name):
+    with open(name_file, "w", encoding="utf-8") as file:
+        for line in task_list:
+            file.write(f"{line}")
+
+"""главный цик приложения"""
 def main():
     global is_running
+    global name_file
     while is_running:
         print("Меню\n"
             "1 - показать задачи\n"
@@ -63,12 +82,9 @@ def main():
             "4 - Удалить задачу\n"
             "5 - выйти\n")
         choice_user = input('ВВедите ваш выбор (1,2,3,4 или 5)')
+        task_collection = []
 
-        name_file = "saves.txt"
-        file = open(name_file, "r", encoding="utf-8")
-        for line in file:
-            task_collection.append(line.split(''))
-            print(line)
+        load_file(task_collection, name_file)
 
         match str(choice_user):
             case '1':
@@ -76,10 +92,6 @@ def main():
                 input("Нажмите 'ENTER' чтобы продолжить")
             case '2':
                 add_task(task_collection)
-                name_file = "saves.txt"
-                file = open(name_file, "w", encoding="utf-8")
-                for line in task_collection:
-                    file.write(f"{task}\n")
             case '3':
                 show_collection(task_collection)
                 edit_task(task_collection)
