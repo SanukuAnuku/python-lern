@@ -1,8 +1,10 @@
+"""модуль который загружает и сохраняет"""
+
 def load_file(task_list, file_name):
-    name_file = "saves.txt"
-    with open(name_file, "r", encoding="utf-8") as file:
+    with open(file_name, "r", encoding="utf-8") as file:
         for line in file:
-            task_list.append(line)
+            task_list.append(line.strip())
+        return task_list
 
 """сохранение списка задач в файл"""
 def save_file(task_list, file_name):

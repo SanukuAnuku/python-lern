@@ -3,12 +3,15 @@ from viwe import show_collection
 from utils import check_confirm
 from core import delete_task, add_task, edit_task
 from config import NAME_FILE_SAVES
+from utils import insure_saves_file
 name_file = 'saves.txt'
 
 """главный цик приложения"""
-def main():
+def app():
     is_running = True
     name_file = NAME_FILE_SAVES
+    insure_saves_file(name_file)
+    task_collection = load_file([], name_file)
     while is_running:
         print("Меню\n"
             "1 - показать задачи\n"
@@ -17,7 +20,7 @@ def main():
             "4 - Удалить задачу\n"
             "5 - выйти\n")
         choice_user = input('ВВедите ваш выбор (1,2,3,4 или 5)')
-        task_collection = []
+
 
 
         match str(choice_user):
@@ -26,6 +29,7 @@ def main():
                 input("Нажмите 'ENTER' чтобы продолжить")
             case '2':
                 task_collection = add_task(task_collection)
+                print(task_collection)
                 save_file(task_collection, name_file)
             case '3':
                 show_collection(task_collection)

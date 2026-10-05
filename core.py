@@ -18,7 +18,7 @@ def delete_task(task_collection):
 def add_task(task_collection):
     task_name = input("Введите имя задачи для добавления")
     task_content = input("Введите содержание задачи")
-    if task_name.startswith('') or task_content.startswith(''):
+    if task_name.startswith(' ') or task_content.startswith(' '):
         if len(task_content) < 2 and len(task_content) < 2:
             print(f"Имя задачи и содержание не должнео быть пустым !")
     else:
