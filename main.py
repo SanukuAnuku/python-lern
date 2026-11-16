@@ -6,7 +6,9 @@
     сохранять задачу, редактировать
     и может удалять задачу.
 """
-import app
+from core import TaskManager
 
-if __name__ == "__main__":
-    app.app()
+
+if __name__ == '__main__':
+    app = TaskManager()
+    app.run()
